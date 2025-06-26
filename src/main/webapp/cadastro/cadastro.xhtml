@@ -1,0 +1,91 @@
+<html lang="pt-br"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta charset="UTF-8"/>
+    <title>
+        <ui:insert name="title">Página de Cadastro</ui:insert>
+    </title>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+</h:head>
+<h:body>
+
+    <h:form id="menuForm">
+        <!-- Menu -->
+        <p:menubar>
+            <p:menuitem value=" Home" url="#{request.contextPath}/index.xhtml" icon="pi pi-home"/>
+            <p:menuitem value="Cadastro" url="#{request.contextPath}/cadastro/cadastro.xhtml" />
+            <p:menuitem value="Consulta" url="#{request.contextPath}/cadastro/consultaPessoas.xhtml" />
+        </p:menubar>
+    </h:form>
+
+    <h:form id="formCadastro">
+        <!-- Inclui o modal (confirmarModel.xhtml) para reutilização -->
+        <ui:include src="/model/confirmarModel.xhtml" >
+            <ui:param name="modalBean" value="#{cadastroBean}"/>
+        </ui:include>
+
+        <p:panel header="Formulário de Cadastro" style="width:600px;">
+            <!-- Mensagens gerais de erro -->
+            <p:messages showDetail="true" closable="true" />
+
+            <!-- Formulário com painel de duas colunas -->
+            <p:panelGrid columns="2" columnClasses="label,value" style="width:100%; margin-bottom:1em;">
+                <p:outputLabel for="nome" value="Nome Completo:"
+                               style="text-align: left; white-space: nowrap;" />
+                <p:inputText id="nome" value="#{cadastroBean.cadastrarPessoa.nome}"
+                             style="width:100%;" />
+
+                <p:outputLabel for="idade" value="Idade:" styleClass="label" />
+                <p:inputText id="idade" value="#{cadastroBean.cadastrarPessoa.idade}"
+                             style="width:4em;" />
+
+                <p:outputLabel for="data" value="Data de Nascimento:" styleClass="label" />
+                <p:calendar id="data" value="#{cadastroBean.cadastrarPessoa.dataNascimento}"
+                            pattern="dd/MM/yyyy" showIcon="true" />
+            </p:panelGrid>
+            <p:separator/>
+
+            <p:commandButton value="Limpar"
+                             action="#{cadastroBean.limpar}"
+                             update="@form"
+                             icon="pi pi-refresh"
+                             styleClass="ui-button-secondary" />
+
+            <!-- Botão Salvar chama o método de validação na bean.
+                 Se a validação for bem-sucedida, o método validarCampos() invoca o modal de confirmação. -->
+            <p:commandButton value="Salvar"
+                             action="#{cadastroBean.validarCampos}"
+                             update="@form"
+                             process="@form"
+                             icon="pi pi-save"
+                             ajax="true" />
+
+        </p:panel>
+
+        <!-- Diálogo para exibir a lista de campos não preenchidos -->
+        <p:dialog widgetVar="errorDialog" header="Campos não preenchidos"
+                  modal="true" closable="false" resizable="false">
+            <h:outputText value="#{cadastroBean.errorMessage}" escape="false" />
+            <f:facet name="footer">
+                <p:commandButton value="Fechar"
+                                 onclick="PF('errorDialog').hide();"
+                                 type="button" />
+            </f:facet>
+        </p:dialog>
+        <!-- Diaglogo de sucesso-->
+        <p:dialog widgetVar="successDialog" header="Sucesso"
+                  modal="true" closable="false" resizable="false">
+            <h:outputText value="Cadastro realizado com sucesso!" />
+            <f:facet name="footer">
+                <p:commandButton value="Ok"
+                                 onclick="PF('successDialog').hide();"
+                                 type="button" />
+            </f:facet>
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>
