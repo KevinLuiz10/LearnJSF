@@ -24,6 +24,10 @@
 
 
     <h:form id="formConsulta">
+
+        <ui:include src="/model/confirmarExclusaoModel.xhtml" >
+            <ui:param name="modalBean" value="#{consultaPessoaBean}"/>
+        </ui:include>
 <!--        <p:panel header="Lista de Pessoas Cadastradas" style="width:100%; margin:0 auto;">-->
 <!--            <p:messages showDetail="true" closable="true" />-->
 

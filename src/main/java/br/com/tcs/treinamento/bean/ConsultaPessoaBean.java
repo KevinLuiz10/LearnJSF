@@ -96,6 +96,16 @@ public class ConsultaPessoaBean implements Serializable {
         return "alterar?faces-redirect=true&pessoaId=" + pessoa.getId() + "&tpManutencao=true";
     }
 
+    public void prepararExclusao(Pessoa pessoa){
+        pessoaSelecionada = pessoa;
+        PrimeFaces.current().executeScript("PF('confirmRemoveDialog').show();");
+    }
+
+    public String confirmarExclusao(){
+        pessoaService.removeById(pessoaSelecionada.getId());
+        return "consultaPessoas?faces-redirect=true";
+    }
+
 
     public List<Pessoa> getPessoas() {
         return pessoas;

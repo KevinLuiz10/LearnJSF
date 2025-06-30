@@ -69,7 +69,7 @@
         <!-- Diálogo para exibir a lista de campos não preenchidos -->
         <p:dialog widgetVar="errorDialog" header="Campos não preenchidos"
                   modal="true" closable="false" resizable="false">
-            <h:outputText value="#{cadastroBean.errorMessage}" escape="false" />
+            <h:outputText value="#{consultaPessoaBean.errorMessage}" escape="false" />
             <f:facet name="footer">
                 <p:commandButton value="Fechar"
                                  onclick="PF('errorDialog').hide();"
