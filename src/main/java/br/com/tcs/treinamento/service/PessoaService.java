@@ -24,11 +24,23 @@ public class PessoaService implements Serializable {
     }
 
     public void cadastrar(Pessoa pessoa){
+        if (pessoa.getId() == null) {
+            pessoa.setId(gerarNovoId());
+        }
+
         pessoaDAO.cadastrar(pessoa);
     }
 
     public boolean removeById(Long id){
         return pessoaDAO.removeById(id);
+    }
+
+    private Long gerarNovoId() {
+        long maxId = listar().stream()
+                .mapToLong(p -> p.getId() != null ? p.getId() : 0L)
+                .max()
+                .orElse(0L);
+        return maxId + 1;
     }
 
 }

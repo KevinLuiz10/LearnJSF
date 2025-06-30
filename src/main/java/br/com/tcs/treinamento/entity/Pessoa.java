@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Pessoa {
-    private static Long ids=0L;
 
     private Long id;
 
@@ -20,10 +19,11 @@ public class Pessoa {
     private Date dataNascimento;
 
     public Pessoa() {
-        id=++ids;
+        this.id = null;
     }
 
-    public Pessoa(String nome, int idade, Date dataNascimento) {
+    public Pessoa(Long id, String nome, int idade, Date dataNascimento) {
+        this.id = id;
         this.nome = nome;
         this.idade = idade;
         this.dataNascimento = dataNascimento;

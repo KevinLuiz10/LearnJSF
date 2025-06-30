@@ -23,6 +23,10 @@
     </h:form>
 
 
+    <ui:include src="/model/confirmarEdicaoModel.xhtml" >
+        <ui:param name="modalBean" value="#{consultaPessoaBean}"/>
+    </ui:include>
+
     <h:form id="formConsulta">
 
         <ui:include src="/model/confirmarExclusaoModel.xhtml" >
@@ -33,7 +37,8 @@
 
 <!--            <div style="width:100%;">-->
 <!--                <div style="transform: scale(0.9); transform-origin: top left; width:100%;">-->
-                    <p:dataTable value="#{consultaPessoaBean.pessoas}"
+                    <p:dataTable id="dataTablePessoas"
+                                 value="#{consultaPessoaBean.pessoas}"
                                  var="p"
                                  paginator="true"
                                  paginatorPosition="bottom"
@@ -67,10 +72,12 @@
                             <div style="display:flex; justify-content:center; align-items:center; gap:10px;">
                                 <p:commandButton value="Alterar"
                                                  action="#{consultaPessoaBean.prepararEdicao(p)}"
+                                                 process="@this"
                                                  icon="pi pi-pencil"
                                                  styleClass="ui-button-secondary"
                                                  style="width:140px;"
-                                                 update="@form" />
+                                                 update=":formDialog"
+                                                 oncomplete="PF('dialogEditar').show()" />
                                 <p:commandButton value="Excluir"
                                                  action="#{consultaPessoaBean.prepararExclusao(p)}"
                                                  icon="pi pi-trash"

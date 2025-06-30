@@ -6,6 +6,7 @@ import org.primefaces.PrimeFaces;
 
 import javax.annotation.PostConstruct;
 import javax.faces.annotation.ManagedProperty;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
@@ -63,7 +64,8 @@ public class ConsultaPessoaBean implements Serializable {
         return pessoa;
     }
 
-    public void validarCampos() {
+    /*
+    public List<String> validarCampos() {
         List<String> erros = new ArrayList<>();
 
         if (pessoaSelecionada.getNome() == null || pessoaSelecionada.getNome().trim().isEmpty()) {
@@ -79,21 +81,54 @@ public class ConsultaPessoaBean implements Serializable {
         }
 
         if (!erros.isEmpty()) {
-            errorMessage = String.join("<br/>", erros);
-            PrimeFaces.current().executeScript("PF('errorDialog').show();");
+            return erros;
+            //errorMessage = String.join("<br/>", erros);
+            //PrimeFaces.current().executeScript("PF('errorDialog').show();");
         } else {
-            PrimeFaces.current().executeScript("PF('confirmDialog').show();");
+            return null;
+            //PrimeFaces.current().executeScript("PF('confirmDialog').show();");
         }
 
     }
+    */
 
     public String confirmar(){
         pessoaService.cadastrar(pessoaSelecionada);
+        pessoas = pessoaService.listar();
         return "consultaPessoas?faces-redirect=true";
     }
 
-    public String prepararEdicao(Pessoa pessoa){
-        return "alterar?faces-redirect=true&pessoaId=" + pessoa.getId() + "&tpManutencao=true";
+    public void salvar() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (pessoaSelecionada.getNome() == null || pessoaSelecionada.getNome().trim().isEmpty()) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Nome não informado."));
+            context.validationFailed();
+            return;
+        }
+
+        if (pessoaSelecionada.getIdade() == null) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Idade não informada."));
+            context.validationFailed();
+            return;
+        }
+
+        if (pessoaSelecionada.getDataNascimento() == null) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Data de nascimento não informada."));
+            context.validationFailed();
+            return;
+        }
+
+        // Se chegou aqui, está tudo ok:
+        confirmar();
+
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Pessoa atualizada."));
+    }
+
+    public void prepararEdicao(Pessoa pessoa){
+        //return "alterar?faces-redirect=true&pessoaId=" + pessoa.getId() + "&tpManutencao=true";
+        this.pessoaSelecionada = pessoa;
+        System.out.println("Entrou em preparar edicao");
     }
 
     public void prepararExclusao(Pessoa pessoa){

@@ -30,7 +30,7 @@ public class PessoaDAO {
 
     public boolean cadastrar(Pessoa pessoa){
         for(int i=0; i<pessoas.size(); i++){
-            if(pessoas.get(i).getId()==pessoa.getId()){
+            if(pessoas.get(i).getId().equals(pessoa.getId())){
                 pessoas.set(i, pessoa);
                 return true;
             }

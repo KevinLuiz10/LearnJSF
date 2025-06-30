@@ -1,0 +1,47 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <p:dialog header="Editar Pessoa"
+              widgetVar="dialogEditar"
+              modal="true"
+              resizable="false"
+              id="dialogEditar">
+
+        <h:form id="formDialog">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel value="Nome:" />
+                <p:inputText value="#{modalBean.pessoaSelecionada.nome}" />
+
+                <h:outputLabel value="Idade:" />
+                <p:inputText value="#{modalBean.pessoaSelecionada.idade}" />
+
+                <h:outputLabel value="Data de nascimento:" />
+                <p:inputText value="#{modalBean.pessoaSelecionada.dataNascimento}" >
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </p:inputText>
+
+                <p:messages id="messages" autoUpdate="true" closable="true" showDetail="true" />
+            </h:panelGrid>
+
+            <p:separator />
+
+            <p:commandButton value="Salvar"
+                             actionListener="#{modalBean.salvar}"
+                             update=":formConsulta:dataTablePessoas"
+                             oncomplete="if (!args.validationFailed) PF('dialogEditar').hide();"
+                             icon="pi pi-check" />
+
+            <p:commandButton value="Cancelar"
+                             type="button"
+                             onclick="PF('dialogEditar').hide()"
+                             icon="pi pi-times"
+                             styleClass="ui-button-secondary" />
+        </h:form>
+    </p:dialog>
+</ui:composition>
