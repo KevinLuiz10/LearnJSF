@@ -110,4 +110,16 @@ public class Pessoa {
                 ", data de nascimento=" + dataNascimento +
                 '}';
     }
+
+    public Pessoa copy(){
+        Pessoa pessoa = new Pessoa();
+        pessoa.setId(this.id);
+        pessoa.setNome(this.nome);
+        pessoa.setIdade(this.idade);
+        pessoa.setDataNascimento(this.dataNascimento);
+        pessoa.setTipoDocumento(this.tipoDocumento);
+        pessoa.setNumeroCPF(this.numeroCPF);
+        pessoa.setNumeroCNPJ(this.numeroCNPJ);
+        return pessoa;
+    }
 }

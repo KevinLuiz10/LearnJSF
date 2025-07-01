@@ -17,7 +17,10 @@
 
         <h:form id="formDialog">
             <p:panel style="width:900px;">
-                <p:messages id="messages" autoUpdate="true" closable="true" showDetail="true" />
+                <p:outputPanel id="panelMensagens" autoUpdate="true" style="color: red;" escape="false">
+                    <h:outputText value="#{modalBean.errorMessage}" escape="false" />
+                </p:outputPanel>
+
                 <p:panelGrid columns="3">
                     <!-- Nome Completo -->
                     <i class="pi pi-arrow-right"></i>
@@ -38,9 +41,9 @@
                                 value="#{modalBean.pessoaSelecionada.dataNascimento}"
                                 pattern="dd/MM/yyyy"
                                 maxdate="#{now}"
-                                navigator="true"
+                                navigator="false"
                                 yearRange="c-100:c+100"
-                                readonly="true"
+                                readonly="false"
                                 readonlyInput="false">
                         <p:ajax event="dateSelect"
                                 update="data"
@@ -56,8 +59,8 @@
 
                 <h:panelGroup layout="block" styleClass="flex-form-row">
                     <p:outputLabel for="tipo" value="Tipo de Documento:" styleClass="form-label" />
-                    <p:selectOneMenu id="tipo" value="#{modalBean.pessoaSelecionada.tipoDocumento}" styleClass="form-input">
-                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                    <p:selectOneMenu id="tipo" value="#{modalBean.pessoaSelecionada.tipoDocumento}" styleClass="form-input" required="false">
+                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
                         <f:selectItem itemLabel="CPF" itemValue="CPF" />
                         <f:selectItem itemLabel="CNPJ" itemValue="CNPJ" />
                         <p:ajax update="documento-fields" process="@this" />
@@ -83,9 +86,9 @@
                 <p:separator />
 
                 <p:commandButton value="Salvar"
-                                 actionListener="#{modalBean.salvar}"
-                                 update=":formConsulta:dataTablePessoas"
-                                 oncomplete="if (!args.validationFailed) PF('dialogEditar').hide();"
+                                 action="#{modalBean.validarCampos}"
+                                 process="@form"
+                                 update="formDialog:panelMensagens"
                                  icon="pi pi-check" />
 
                 <p:commandButton value="Cancelar"

@@ -64,9 +64,10 @@ public class ConsultaPessoaBean implements Serializable {
         return pessoa;
     }
 
-    /*
-    public List<String> validarCampos() {
+
+    public String validarCampos() {
         List<String> erros = new ArrayList<>();
+        errorMessage=null;
 
         if (pessoaSelecionada.getNome() == null || pessoaSelecionada.getNome().trim().isEmpty()) {
             erros.add("Nome não informado.");
@@ -80,54 +81,79 @@ public class ConsultaPessoaBean implements Serializable {
             erros.add("Data de nascimento não informada.");
         }
 
-        if (!erros.isEmpty()) {
-            return erros;
-            //errorMessage = String.join("<br/>", erros);
-            //PrimeFaces.current().executeScript("PF('errorDialog').show();");
+
+        if (pessoaSelecionada.getTipoDocumento() == null || pessoaSelecionada.getTipoDocumento().trim().isEmpty()) {
+            erros.add("Tipo de documento não informado.");
         } else {
-            return null;
-            //PrimeFaces.current().executeScript("PF('confirmDialog').show();");
+            if ("CPF".equals(pessoaSelecionada.getTipoDocumento())) {
+                if (pessoaSelecionada.getNumeroCPF() == null || pessoaSelecionada.getNumeroCPF().trim().isEmpty() ||
+                        pessoaSelecionada.getNumeroCPF().trim().length() < 11) {
+                    erros.add("CPF não informado ou incompleto (deve conter 11 dígitos).");
+                }
+            } else if ("CNPJ".equals(pessoaSelecionada.getTipoDocumento())) {
+                if (pessoaSelecionada.getNumeroCNPJ() == null || pessoaSelecionada.getNumeroCNPJ().trim().isEmpty() ||
+                        pessoaSelecionada.getNumeroCNPJ().trim().length() < 14) {
+                    erros.add("CNPJ não informado ou incompleto (deve conter 14 dígitos).");
+                }
+            }
         }
+
+        if (erros.isEmpty()) {
+            System.out.println("Entrou no if de sucesso");
+            pessoaService.cadastrar(pessoaSelecionada);
+            pessoas = pessoaService.listar();
+            // atualiza tabela de fora do diálogo se precisar
+            PrimeFaces.current().ajax().update("formListaPessoas");
+            PrimeFaces.current().executeScript("PF('dialogEditar').hide()");
+            return "consultaPessoas?faces-redirect=true";
+        } else {
+            System.out.println("Entrou no if de falha");
+            errorMessage = String.join("<br/>", erros);
+            PrimeFaces.current().ajax().update("panelMensagens");
+        }
+        return null;
 
     }
-    */
 
-    public String confirmar(){
-        pessoaService.cadastrar(pessoaSelecionada);
-        pessoas = pessoaService.listar();
-        return "consultaPessoas?faces-redirect=true";
-    }
 
-    public void salvar() {
-        FacesContext context = FacesContext.getCurrentInstance();
+//    public String confirmar(){
+//        System.out.println("Entrou no confirmar.");
+//        pessoaService.cadastrar(pessoaSelecionada);
+//        pessoas = pessoaService.listar();
+//        return "consultaPessoas?faces-redirect=true";
+//    }
 
-        if (pessoaSelecionada.getNome() == null || pessoaSelecionada.getNome().trim().isEmpty()) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Nome não informado."));
-            context.validationFailed();
-            return;
-        }
-
-        if (pessoaSelecionada.getIdade() == null) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Idade não informada."));
-            context.validationFailed();
-            return;
-        }
-
-        if (pessoaSelecionada.getDataNascimento() == null) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Data de nascimento não informada."));
-            context.validationFailed();
-            return;
-        }
-
-        // Se chegou aqui, está tudo ok:
-        confirmar();
-
-        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Pessoa atualizada."));
-    }
+//    public Boolean salvar() {
+//        FacesContext context = FacesContext.getCurrentInstance();
+//
+//        if (pessoaSelecionada.getNome() == null || pessoaSelecionada.getNome().trim().isEmpty()) {
+//            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Nome não informado."));
+//            context.validationFailed();
+//            return false;
+//        }
+//
+//        if (pessoaSelecionada.getIdade() == null) {
+//            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Idade não informada."));
+//            context.validationFailed();
+//            return false;
+//        }
+//
+//        if (pessoaSelecionada.getDataNascimento() == null) {
+//            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Data de nascimento não informada."));
+//            context.validationFailed();
+//            return false;
+//        }
+//
+//        // Se chegou aqui, está tudo ok:
+//        confirmar();
+//
+//        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso", "Pessoa atualizada."));
+//        return true;
+//    }
 
     public void prepararEdicao(Pessoa pessoa){
         //return "alterar?faces-redirect=true&pessoaId=" + pessoa.getId() + "&tpManutencao=true";
-        this.pessoaSelecionada = pessoa;
+        this.pessoaSelecionada = pessoa.copy();
     }
 
     public void prepararExclusao(Pessoa pessoa){

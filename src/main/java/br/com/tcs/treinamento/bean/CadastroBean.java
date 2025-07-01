@@ -64,6 +64,22 @@ public class CadastroBean implements Serializable {
             erros.add("Data de nascimento não informada.");
         }
 
+        if (cadastrarPessoa.getTipoDocumento() == null || cadastrarPessoa.getTipoDocumento().trim().isEmpty()) {
+            erros.add("Tipo de documento não informado.");
+        } else {
+            if ("CPF".equals(cadastrarPessoa.getTipoDocumento())) {
+                if (cadastrarPessoa.getNumeroCPF() == null || cadastrarPessoa.getNumeroCPF().trim().isEmpty() ||
+                        cadastrarPessoa.getNumeroCPF().trim().length() < 11) {
+                    erros.add("CPF não informado ou incompleto (deve conter 11 dígitos).");
+                }
+            } else if ("CNPJ".equals(cadastrarPessoa.getTipoDocumento())) {
+                if (cadastrarPessoa.getNumeroCNPJ() == null || cadastrarPessoa.getNumeroCNPJ().trim().isEmpty() ||
+                        cadastrarPessoa.getNumeroCNPJ().trim().length() < 14) {
+                    erros.add("CNPJ não informado ou incompleto (deve conter 14 dígitos).");
+                }
+            }
+        }
+
         if (!erros.isEmpty()) {
             errorMessage = String.join("<br/>", erros);
             PrimeFaces.current().executeScript("PF('errorDialog').show();");
