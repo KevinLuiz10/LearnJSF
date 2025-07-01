@@ -4,6 +4,7 @@ import br.com.tcs.treinamento.entity.Pessoa;
 import br.com.tcs.treinamento.service.PessoaService;
 import org.primefaces.PrimeFaces;
 
+import org.primefaces.component.export.PDFOptions;
 import javax.annotation.PostConstruct;
 import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.FacesMessage;
@@ -26,6 +27,8 @@ public class ConsultaPessoaBean implements Serializable {
     private String errorMessage;
     private Long pessoaId;
     private Boolean tpManutencao;
+
+    private PDFOptions exportPdfOptions;
 
     @Inject
     private PessoaService pessoaService;
@@ -216,5 +219,11 @@ public class ConsultaPessoaBean implements Serializable {
     }
     public void setTpManutencao(Boolean tpManutencao) {
         this.tpManutencao = tpManutencao;
+    }
+    public PDFOptions getExportPdfOptions() {
+        return exportPdfOptions;
+    }
+    public void setExportPdfOptions(PDFOptions exportPdfOptions) {
+        this.exportPdfOptions = exportPdfOptions;
     }
 }

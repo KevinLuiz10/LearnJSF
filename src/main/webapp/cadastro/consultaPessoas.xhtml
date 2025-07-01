@@ -32,77 +32,89 @@
         <ui:include src="/model/confirmarExclusaoModel.xhtml" >
             <ui:param name="modalBean" value="#{consultaPessoaBean}"/>
         </ui:include>
-<!--        <p:panel header="Lista de Pessoas Cadastradas" style="width:100%; margin:0 auto;">-->
-<!--            <p:messages showDetail="true" closable="true" />-->
 
-<!--            <div style="width:100%;">-->
-<!--                <div style="transform: scale(0.9); transform-origin: top left; width:100%;">-->
-                    <p:dataTable id="dataTablePessoas"
-                                 value="#{consultaPessoaBean.pessoas}"
-                                 var="p"
-                                 paginator="true"
-                                 paginatorPosition="bottom"
-                                 rows="7"
-                                 autoLayout="true"
-                                 responsiveLayout="scroll"
-                                 emptyMessage="Nenhuma pessoa cadastrada."
-                                 rowKey="#{p.id}"
-                                 styleClass="ui-datatable-striped ui-datatable-hover"
-                                 style="width:100%; table-layout:auto;">
+        <p:commandButton value="Exportar PDF"
+                         icon="pi pi-file-pdf"
+                         styleClass="ui-button-danger"
+                         ajax="false">
+            <p:dataExporter type="pdf"
+                            target="dataTablePessoas"
+                            fileName="lista-pessoas"
+                            options="#{consultaPessoaBean.exportPdfOptions}" />
+        </p:commandButton>
 
-                        <p:column headerText="Id" style="width:5%;">
-                            #{p.id}
-                        </p:column>
+        <p:commandButton value="Exportar Excel"
+                         icon="pi pi-file-excel"
+                         styleClass="ui-button-success"
+                         ajax="false">
+            <p:dataExporter type="xlsx"
+                            target="dataTablePessoas"
+                            fileName="lista-pessoas" />
+        </p:commandButton>
+        <br/><br/>
 
-                        <p:column headerText="Tipo de cadastro" style="width:6%; text-align:center;">
-                            #{consultaPessoaBean.getTipoCadastro(p)}
-                        </p:column>
+        <p:dataTable id="dataTablePessoas"
+                     value="#{consultaPessoaBean.pessoas}"
+                     var="p"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     rows="7"
+                     autoLayout="true"
+                     responsiveLayout="scroll"
+                     emptyMessage="Nenhuma pessoa cadastrada."
+                     rowKey="#{p.id}"
+                     styleClass="ui-datatable-striped ui-datatable-hover"
+                     style="width:100%; table-layout:auto;">
 
-                        <p:column headerText="Nome" style="width:25%;">
-                            #{p.nome}
-                        </p:column>
+            <p:column headerText="Id" style="width:5%;">
+                <h:outputText value="#{p.id}" />
+            </p:column>
 
-                        <p:column headerText="Idade" style="width:6%; text-align:center;">
-                            #{p.idade}
-                        </p:column>
+            <p:column headerText="Tipo de cadastro" style="width:6%; text-align:center;">
+                <h:outputText value="#{consultaPessoaBean.getTipoCadastro(p)}" />
+            </p:column>
 
-                        <p:column headerText="Data de Nascimento" style="width:8%; text-align:center;">
-                            <h:outputText value="#{p.dataNascimento}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
-                            </h:outputText>
-                        </p:column>
+            <p:column headerText="Nome" style="width:25%;">
+                <h:outputText value="#{p.nome}" />
+            </p:column>
 
-                        <p:column headerText="Documento(CPF/CNPJ)" style="width:20%; text-align:center;">
-                            #{consultaPessoaBean.getDocumento(p)}
-                        </p:column>
+            <p:column headerText="Idade" style="width:6%; text-align:center;">
+                <h:outputText value="#{p.idade}" />
+            </p:column>
 
-                        <p:column headerText="Ações" style="text-align:center; width:300px;">
-                            <div style="display:flex; justify-content:center; align-items:center; gap:10px;">
-                                <p:commandButton value="Alterar"
-                                                 action="#{consultaPessoaBean.prepararEdicao(p)}"
-                                                 process="@this"
-                                                 icon="pi pi-pencil"
-                                                 styleClass="ui-button-secondary"
-                                                 style="width:140px;"
-                                                 update=":formDialog"
-                                                 oncomplete="PF('dialogEditar').show()" />
-                                <p:commandButton value="Excluir"
-                                                 action="#{consultaPessoaBean.prepararExclusao(p)}"
-                                                 icon="pi pi-trash"
-                                                 styleClass="ui-button-secondary"
-                                                 style="width:140px;"
-                                                 update="@form" />
-                            </div>
-                        </p:column>
+            <p:column headerText="Data de Nascimento" style="width:8%; text-align:center;">
+                <h:outputText value="#{p.dataNascimento}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
 
-                    </p:dataTable>
+            <p:column headerText="Documento(CPF/CNPJ)" style="width:20%; text-align:center;">
+                <h:outputText value="#{consultaPessoaBean.getDocumento(p)}" />
+            </p:column>
 
-                    <br/>
+            <p:column exportable="false" headerText="Ações" style="text-align:center; width:300px;">
+                <div style="display:flex; justify-content:center; align-items:center; gap:10px;">
+                    <p:commandButton value="Alterar"
+                                     action="#{consultaPessoaBean.prepararEdicao(p)}"
+                                     process="@this"
+                                     icon="pi pi-pencil"
+                                     styleClass="ui-button-secondary"
+                                     style="width:140px;"
+                                     update=":formDialog"
+                                     oncomplete="PF('dialogEditar').show()" />
+                    <p:commandButton value="Excluir"
+                                     action="#{consultaPessoaBean.prepararExclusao(p)}"
+                                     icon="pi pi-trash"
+                                     styleClass="ui-button-secondary"
+                                     style="width:140px;"
+                                     update="@form" />
+                </div>
+            </p:column>
 
-<!--                </div>-->
-<!--            </div>-->
+        </p:dataTable>
 
-<!--        </p:panel>-->
+        <br/>
+
     </h:form>
 
 </h:body>

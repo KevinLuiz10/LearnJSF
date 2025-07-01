@@ -23,6 +23,20 @@
       <version>8.0</version>
     </dependency>
 
+    <!-- Biblioteca para exportar em pdf -->
+    <dependency>
+      <groupId>com.lowagie</groupId>
+      <artifactId>itext</artifactId>
+      <version>2.1.7</version>
+    </dependency>
+
+    <!-- Biblioteca para exportar em xls -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>5.2.5</version>
+    </dependency>
+
     <!-- H2 Database -->
     <dependency>
       <groupId>com.h2database</groupId>
