@@ -166,6 +166,20 @@ public class ConsultaPessoaBean implements Serializable {
         return "consultaPessoas?faces-redirect=true";
     }
 
+    public String getTipoCadastro(Pessoa pessoa){
+        if(pessoa.getTipoDocumento().equals("CPF")){
+            return "Pessoa Fisica";
+        }
+        return "Pessoa Juridica";
+    }
+
+    public String getDocumento(Pessoa pessoa){
+        if(pessoa.getTipoDocumento().equals("CPF")){
+            return pessoa.getNumeroCPF();
+        }
+        return pessoa.getNumeroCNPJ();
+    }
+
 
     public List<Pessoa> getPessoas() {
         return pessoas;

@@ -50,8 +50,12 @@
                                  styleClass="ui-datatable-striped ui-datatable-hover"
                                  style="width:100%; table-layout:auto;">
 
-                        <p:column headerText="Id" style="width:25%;">
+                        <p:column headerText="Id" style="width:5%;">
                             #{p.id}
+                        </p:column>
+
+                        <p:column headerText="Tipo de cadastro" style="width:6%; text-align:center;">
+                            #{consultaPessoaBean.getTipoCadastro(p)}
                         </p:column>
 
                         <p:column headerText="Nome" style="width:25%;">
@@ -62,10 +66,14 @@
                             #{p.idade}
                         </p:column>
 
-                        <p:column headerText="Data de Nascimento" style="width:12%;">
+                        <p:column headerText="Data de Nascimento" style="width:8%; text-align:center;">
                             <h:outputText value="#{p.dataNascimento}">
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Documento(CPF/CNPJ)" style="width:20%; text-align:center;">
+                            #{consultaPessoaBean.getDocumento(p)}
                         </p:column>
 
                         <p:column headerText="Ações" style="text-align:center; width:300px;">
