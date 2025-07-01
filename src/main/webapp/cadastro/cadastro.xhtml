@@ -9,6 +9,7 @@
     <title>
         <ui:insert name="title">Página de Cadastro</ui:insert>
     </title>
+    <h:outputStylesheet name="..css/style.css" />
     <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
 </h:head>
 <h:body>
@@ -32,21 +33,44 @@
             <!-- Mensagens gerais de erro -->
             <p:messages showDetail="true" closable="true" />
 
-            <!-- Formulário com painel de duas colunas -->
+
             <p:panelGrid columns="2" columnClasses="label,value" style="width:100%; margin-bottom:1em;">
-                <p:outputLabel for="nome" value="Nome Completo:"
-                               style="text-align: left; white-space: nowrap;" />
-                <p:inputText id="nome" value="#{cadastroBean.cadastrarPessoa.nome}"
-                             style="width:100%;" />
+                <!-- Nome Completo -->
+                <p:outputLabel for="nome" value="Nome Completo:" style="text-align: left; white-space: nowrap;" />
+                <p:inputText id="nome" value="#{cadastroBean.cadastrarPessoa.nome}" />
 
+                <!-- Idade -->
                 <p:outputLabel for="idade" value="Idade:" styleClass="label" />
-                <p:inputText id="idade" value="#{cadastroBean.cadastrarPessoa.idade}"
-                             style="width:4em;" />
+                <p:inputText id="idade" value="#{cadastroBean.cadastrarPessoa.idade}" />
 
+                <!-- Data de Nascimento -->
                 <p:outputLabel for="data" value="Data de Nascimento:" styleClass="label" />
-                <p:calendar id="data" value="#{cadastroBean.cadastrarPessoa.dataNascimento}"
-                            pattern="dd/MM/yyyy" showIcon="true" />
+                <p:calendar id="data" value="#{cadastroBean.cadastrarPessoa.dataNascimento}" pattern="dd/MM/yyyy" showIcon="true" />
+
+<!--                &lt;!&ndash; Tipo de Documento &ndash;&gt;-->
+<!--                <p:outputLabel for="tipo" value="Tipo de Documento:" styleClass="label" />-->
+<!--                <p:selectOneMenu id="tipo" value="#{cadastroBean.cadastrarPessoa.tipoDocumento}" style="width:100%;">-->
+<!--                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />-->
+<!--                    <f:selectItem itemLabel="CPF" itemValue="CPF" />-->
+<!--                    <f:selectItem itemLabel="CNPJ" itemValue="CNPJ" />-->
+<!--                    <p:ajax update="@form" process="@this" />-->
+<!--                </p:selectOneMenu>-->
+
+<!--                &lt;!&ndash; Campo CPF Condicional &ndash;&gt;-->
+<!--                <p:outputLabel for="cpf" value="CPF:" rendered="#{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CPF'}" />-->
+<!--                <p:inputMask id="cpf" value="#{cadastroBean.cadastrarPessoa.numeroCPF}"-->
+<!--                             mask="999.999.999-99" autoClear="true" unmask="true"-->
+<!--                             style="width:100%;" rendered="#{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CPF'}" />-->
+
+<!--                &lt;!&ndash; Campo CNPJ Condicional &ndash;&gt;-->
+<!--                <p:outputLabel for="cnpj" value="CNPJ:" rendered="#{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CNPJ'}" />-->
+<!--                <p:inputMask id="cnpj" value="#{cadastroBean.cadastrarPessoa.numeroCNPJ}"-->
+<!--                             mask="99.999.999/9999-99" autoClear="true" unmask="true"-->
+<!--                             style="width:100%;" rendered="#{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CNPJ'}" />-->
             </p:panelGrid>
+
+
+
             <p:separator/>
 
             <p:commandButton value="Limpar"

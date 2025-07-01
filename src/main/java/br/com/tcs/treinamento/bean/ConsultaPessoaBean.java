@@ -50,7 +50,7 @@ public class ConsultaPessoaBean implements Serializable {
         if (tpParam != null && !tpParam.trim().isEmpty()) {
             setTpManutencao(Boolean.valueOf(tpParam));
         } else {
-            setTpManutencao(true);
+            setTpManutencao(Boolean.valueOf(true));
         }
         pessoas = pessoaService.listar();
     }
@@ -128,7 +128,6 @@ public class ConsultaPessoaBean implements Serializable {
     public void prepararEdicao(Pessoa pessoa){
         //return "alterar?faces-redirect=true&pessoaId=" + pessoa.getId() + "&tpManutencao=true";
         this.pessoaSelecionada = pessoa;
-        System.out.println("Entrou em preparar edicao");
     }
 
     public void prepararExclusao(Pessoa pessoa){

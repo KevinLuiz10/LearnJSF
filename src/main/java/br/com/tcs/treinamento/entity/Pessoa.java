@@ -18,15 +18,17 @@ public class Pessoa {
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
 
+    private String tipoDocumento;
+
+    // Número do CPF (caso tipoDocumento seja CPF)
+    private String numeroCPF;
+
+    // Número do CNPJ (caso tipoDocumento seja CNPJ)
+    private String numeroCNPJ;
+
+
     public Pessoa() {
         this.id = null;
-    }
-
-    public Pessoa(Long id, String nome, int idade, Date dataNascimento) {
-        this.id = id;
-        this.nome = nome;
-        this.idade = idade;
-        this.dataNascimento = dataNascimento;
     }
 
     public Long getId() {
@@ -59,6 +61,30 @@ public class Pessoa {
 
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public String getNumeroCPF() {
+        return numeroCPF;
+    }
+
+    public void setNumeroCPF(String numeroCPF) {
+        this.numeroCPF = numeroCPF;
+    }
+
+    public String getNumeroCNPJ() {
+        return numeroCNPJ;
+    }
+
+    public void setNumeroCNPJ(String numeroCNPJ) {
+        this.numeroCNPJ = numeroCNPJ;
     }
 
     @Override
