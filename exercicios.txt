@@ -3,10 +3,10 @@ Projeto para treinamento JSF
 1 - Criar uma campo de texto, mais um de data, com um botão e realizar a validação dos campos       Feito
 2 - Criar um popup ou modal com a mensagem de erro                                                  Feito
 3 - Criar um popup com um campo digitável e retornar este campo tela principal                      Feito
-4 - Criar um combo com cpf/cnpj. Ao escolher uma das opções, apresentar os campos na tela.
-5 - Criar rotina de edição para os campos de CPF e CNPJ
+4 - Criar um combo com cpf/cnpj. Ao escolher uma das opções, apresentar os campos na tela.          Feito
+5 - Criar rotina de edição para os campos de CPF e CNPJ                                             Feito
 6 - Criar nova tela/menu                                                                            Feito
 7 - Criar uma Lista                                                                                 Feito
 8 - Tratar uma coluna na Lista
-9 - Criar rotina de inclusão/exclusão de Lista
+9 - Criar rotina de inclusão/exclusão de Lista                                                      Feito
 10 - PDF e Excel
