@@ -10,3 +10,12 @@ Projeto para treinamento JSF
 8 - Tratar uma coluna na Lista                                                                      Feito
 9 - Criar rotina de inclusão/exclusão de Lista                                                      Feito
 10 - PDF e Excel
+
+
+
+Requisito extra:
+    CPF da direita pra esquerda
+    começar com uma mascara 0000000000
+    manter os zeros enquanto digita o documento
+
+    Pode ser que que inverta a entrada do dado.
