@@ -91,17 +91,17 @@
                             <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                             <f:selectItem itemLabel="CPF" itemValue="CPF" />
                             <f:selectItem itemLabel="CNPJ" itemValue="CNPJ" />
-                            <p:ajax update="@form" process="@this" />
+                            <p:ajax update="panelgrid" process="@this" />
                         </p:selectOneMenu>
                     </p:column>
                 </p:row>
 
 
-                <p:row>
+                <p:row id="document-row">
                     <p:column styleClass="column-arrow">  <!--define width of a column-->
                         <i class="pi pi-arrow-right"></i>
                     </p:column>
-                    <p:column styleClass="column-label"> <!--column 2-->
+                    <p:column styleClass="column-label" > <!--column 2-->
                         <!-- Campo CPF Condicional -->
                         <p:outputLabel for="cpf" value="CPF:" rendered="#{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CPF'}" />
 

@@ -5,7 +5,9 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-
+    <h:head>
+        <h:outputStylesheet name="styleConfirmarEdicaoModel.css" library="css" />
+    </h:head>
 
     <p:dialog header="Editar Pessoa"
               widgetVar="dialogEditar"
@@ -14,34 +16,84 @@
               id="dialogEditar">
 
         <h:form id="formDialog">
-            <h:panelGrid columns="2" cellpadding="5">
-                <h:outputLabel value="Nome:" />
-                <p:inputText value="#{modalBean.pessoaSelecionada.nome}" />
-
-                <h:outputLabel value="Idade:" />
-                <p:inputText value="#{modalBean.pessoaSelecionada.idade}" />
-
-                <h:outputLabel value="Data de nascimento:" />
-                <p:inputText value="#{modalBean.pessoaSelecionada.dataNascimento}" >
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                </p:inputText>
-
+            <p:panel style="width:900px;">
                 <p:messages id="messages" autoUpdate="true" closable="true" showDetail="true" />
-            </h:panelGrid>
+                <p:panelGrid columns="3">
+                    <!-- Nome Completo -->
+                    <i class="pi pi-arrow-right"></i>
+                    <p:outputLabel for="nome" value="Nome Completo:" style="text-align: left; white-space: nowrap;" />
+                    <p:inputText id="nome" value="#{modalBean.pessoaSelecionada.nome}" />
 
-            <p:separator />
 
-            <p:commandButton value="Salvar"
-                             actionListener="#{modalBean.salvar}"
-                             update=":formConsulta:dataTablePessoas"
-                             oncomplete="if (!args.validationFailed) PF('dialogEditar').hide();"
-                             icon="pi pi-check" />
+                    <!-- Idade -->
+                    <i class="pi pi-arrow-right"></i>
+                    <p:outputLabel for="idade" value="Idade:" styleClass="label" />
+                    <p:inputText id="idade" value="#{modalBean.pessoaSelecionada.idade}" />
 
-            <p:commandButton value="Cancelar"
-                             type="button"
-                             onclick="PF('dialogEditar').hide()"
-                             icon="pi pi-times"
-                             styleClass="ui-button-secondary" />
+
+                    <!-- Data de Nascimento -->
+                    <i class="pi pi-arrow-right"></i>
+                    <p:outputLabel for="data" value="Data de Nascimento:" styleClass="label" />
+                    <p:calendar id="data"
+                                value="#{modalBean.pessoaSelecionada.dataNascimento}"
+                                pattern="dd/MM/yyyy"
+                                maxdate="#{now}"
+                                navigator="true"
+                                yearRange="c-100:c+100"
+                                readonly="true"
+                                readonlyInput="false">
+                        <p:ajax event="dateSelect"
+                                update="data"
+                                global="false"/>
+                        <p:ajax global="false"
+                                update="data"
+                                event="change"/>
+                    </p:calendar>
+
+                </p:panelGrid>
+
+                <p:separator />
+
+                <h:panelGroup layout="block" styleClass="flex-form-row">
+                    <p:outputLabel for="tipo" value="Tipo de Documento:" styleClass="form-label" />
+                    <p:selectOneMenu id="tipo" value="#{modalBean.pessoaSelecionada.tipoDocumento}" styleClass="form-input">
+                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                        <f:selectItem itemLabel="CPF" itemValue="CPF" />
+                        <f:selectItem itemLabel="CNPJ" itemValue="CNPJ" />
+                        <p:ajax update="documento-fields" process="@this" />
+                    </p:selectOneMenu>
+                </h:panelGroup>
+
+                <h:panelGroup id="documento-fields" layout="block">
+                    <h:panelGroup rendered="#{modalBean.pessoaSelecionada.tipoDocumento eq 'CPF'}" layout="block" styleClass="flex-form-row">
+                        <p:outputLabel for="cpf" value="CPF:" styleClass="form-label" />
+                        <p:inputMask id="cpf" value="#{modalBean.pessoaSelecionada.numeroCPF}"
+                                     mask="999.999.999-99" autoClear="true" unmask="true"
+                                     styleClass="form-input" />
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{modalBean.pessoaSelecionada.tipoDocumento eq 'CNPJ'}" layout="block" styleClass="flex-form-row">
+                        <p:outputLabel for="cnpj" value="CNPJ:" styleClass="form-label" />
+                        <p:inputMask id="cnpj" value="#{modalBean.pessoaSelecionada.numeroCNPJ}"
+                                     mask="99.999.999/9999-99" autoClear="true" unmask="true"
+                                     styleClass="form-input" />
+                    </h:panelGroup>
+                </h:panelGroup>
+
+                <p:separator />
+
+                <p:commandButton value="Salvar"
+                                 actionListener="#{modalBean.salvar}"
+                                 update=":formConsulta:dataTablePessoas"
+                                 oncomplete="if (!args.validationFailed) PF('dialogEditar').hide();"
+                                 icon="pi pi-check" />
+
+                <p:commandButton value="Cancelar"
+                                 type="button"
+                                 onclick="PF('dialogEditar').hide()"
+                                 icon="pi pi-times"
+                                 styleClass="ui-button-secondary" />
+            </p:panel>
         </h:form>
     </p:dialog>
 </ui:composition>

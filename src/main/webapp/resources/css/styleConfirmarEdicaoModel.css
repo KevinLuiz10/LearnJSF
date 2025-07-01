@@ -1,0 +1,19 @@
+.flex-form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.form-label {
+    width: 200px; /* ou ajuste como quiser */
+    font-weight: bold;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.form-input {
+    flex: 1;
+    min-width: 200px;
+}
