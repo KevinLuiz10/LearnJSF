@@ -1,38 +1,51 @@
+*{
+    background-color: red;
+}
+.panelgrid{
+    width: 100%;
+}
+
 /* Para as labels */
-.label {
+.column-label {
     text-align: left; /* Alinha o texto da label à direita */
     vertical-align: middle; /* Alinha verticalmente no meio */
     padding-right: 5px; /* Um pouco de espaço entre a label e o input */
     white-space: nowrap; /* Impede que a label quebre a linha */
-    width: 20%; /* Ajuste a largura conforme a necessidade do seu layout */
+    width: 30%; /* Ajuste a largura conforme a necessidade do seu layout */
 }
 
 /* Para os valores (inputs) */
-.value {
-    text-align: right; /* Alinha o texto do input à esquerda */
+.column-value {
+    text-align: left; /* Alinha o texto do input à esquerda */
     vertical-align: middle; /* Alinha verticalmente no meio */
     padding-left: 5px; /* Um pouco de espaço entre a label e o input */
-    width: 80%; /* Ajuste a largura conforme a necessidade do seu layout */
+    width: 60%; /* Ajuste a largura conforme a necessidade do seu layout */
 }
 
-/* Opcional: Estilos para os inputText e p:calendar dentro do panelGrid */
-.ui-panelgrid .ui-inputfield {
-    width: 100%; /* Faz com que os inputs preencham a largura disponível na coluna 'value' */
-    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura total */
+.column-arrow{
+    width: 10%;
 }
 
 
-/* Ajuste específico para o input de nome, se necessário */
-.ui-panelgrid #nome {
-    width: 6em; /* Ou defina um valor em pixels se preferir um tamanho fixo */
-}
+/*!* Opcional: Estilos para os inputText e p:calendar dentro do panelGrid *!*/
+/*.ui-panelgrid .ui-inputfield {*/
+/*    width: 100%; !* Faz com que os inputs preencham a largura disponível na coluna 'value' *!*/
+/*    box-sizing: border-box; !* Garante que padding e border sejam incluídos na largura total *!*/
+/*}*/
 
-/* Ajuste específico para o input de idade, se necessário */
-.ui-panelgrid #idade {
-    width: 4em; /* Ou defina um valor em pixels se preferir um tamanho fixo */
-}
 
-/* Ajuste específico para o input de data, se necessário */
-.ui-panelgrid #data {
-    width: 4em; /* Ou defina um valor em pixels se preferir um tamanho fixo */
-}
+
+/*!* Ajuste específico para o input de nome, se necessário *!*/
+/*.ui-panelgrid #nome {*/
+/*    width: 6em; !* Ou defina um valor em pixels se preferir um tamanho fixo *!*/
+/*}*/
+
+/*!* Ajuste específico para o input de idade, se necessário *!*/
+/*.ui-panelgrid #idade {*/
+/*    width: 4em; !* Ou defina um valor em pixels se preferir um tamanho fixo *!*/
+/*}*/
+
+/*!* Ajuste específico para o input de data, se necessário *!*/
+/*.ui-panelgrid #data {*/
+/*    width: 4em; !* Ou defina um valor em pixels se preferir um tamanho fixo *!*/
+/*}*/
