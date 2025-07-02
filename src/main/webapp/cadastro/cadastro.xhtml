@@ -10,8 +10,9 @@
         <ui:insert name="title">Página de Cadastro</ui:insert>
     </title>
     <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
-    <h:outputStylesheet name="style.css" library="css" />
     <h:outputStylesheet name="styleConfirmarEdicaoModel.css" library="css" />
+
+    <h:outputScript library="js" name="inputmask.min.js" target="head" />
 </h:head>
 <h:body>
 
@@ -90,23 +91,33 @@
                     <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                     <f:selectItem itemLabel="CPF" itemValue="CPF" />
                     <f:selectItem itemLabel="CNPJ" itemValue="CNPJ" />
-                    <p:ajax update="documento-fields" process="@this" />
+                    <p:ajax update="documento-fields" process="@this"
+                            oncomplete="setTimeout(function() {
+                                if (document.getElementById('formCadastro:cpf')) {
+                                    aplicarInputInvertido('formCadastro:cpf', 'CPF');
+                                }
+                                if (document.getElementById('formCadastro:cnpj')) {
+                                    aplicarInputInvertido('formCadastro:cnpj', 'CNPJ');
+                                }
+                            }, 100);" />
                 </p:selectOneMenu>
             </h:panelGroup>
 
             <h:panelGroup id="documento-fields" layout="block">
                 <h:panelGroup rendered="#{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CPF'}" layout="block" styleClass="flex-form-row">
                     <p:outputLabel for="cpf" value="CPF:" styleClass="form-label" />
-                    <p:inputMask id="cpf" value="#{cadastroBean.cadastrarPessoa.numeroCPF}"
-                                 mask="999.999.999-99" autoClear="true" unmask="true"
-                                 styleClass="form-input" />
+                    <p:inputText id="cpf" value="#{cadastroBean.cadastrarPessoa.numeroCPF}"
+                                 placeholder="000.000.000-00"
+                                 onfocus="aplicarInputInvertido(this.id, 'CPF')"
+                                 autoClear="true" unmask="true"/>
                 </h:panelGroup>
 
                 <h:panelGroup rendered="#{cadastroBean.cadastrarPessoa.tipoDocumento eq 'CNPJ'}" layout="block" styleClass="flex-form-row">
                     <p:outputLabel for="cnpj" value="CNPJ:" styleClass="form-label" />
-                    <p:inputMask id="cnpj" value="#{cadastroBean.cadastrarPessoa.numeroCNPJ}"
-                                 mask="99.999.999/9999-99" autoClear="true" unmask="true"
-                                 styleClass="form-input" />
+                    <p:inputText id="cnpj" value="#{cadastroBean.cadastrarPessoa.numeroCNPJ}"
+                                 placeholder="00.000.000/0000-00"
+                                 onfocus="aplicarInputInvertido(this.id, 'CNPJ')"
+                                 autoClear="true" unmask="true"/>
                 </h:panelGroup>
             </h:panelGroup>
 
@@ -150,5 +161,29 @@
             </f:facet>
         </p:dialog>
     </h:form>
+
+    <!-- Script para regra de preenchimento dos campos CPF E CNPJ da direita para esquerda-->
+    <h:outputScript target="body">
+        document.addEventListener("DOMContentLoaded", function () {
+        window.aplicarInputInvertido = function(idCampo, tipo) {
+        const mascara = tipo === 'CPF' ? '999.999.999-99' : '99.999.999/9999-99';
+        const input = document.getElementById(idCampo);
+        if (!input || typeof Inputmask === "undefined") {
+        console.warn("Inputmask não disponível.");
+        return;
+        }
+
+        Inputmask({
+        mask: mascara,
+        numericInput: true,
+        rightAlign: false,
+        placeholder: '0',
+        showMaskOnHover: true,
+        showMaskOnFocus: true,
+        clearIncomplete: true
+        }).mask(input);
+        };
+        });
+    </h:outputScript>
 </h:body>
 </html>
